@@ -1,31 +1,32 @@
-package exercise.android.reemh.todo_items;
+package exercise.android.reemh.todo_items
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import android.os.Build
+import android.os.Bundle
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+class MainActivity : AppCompatActivity() {
+	@JvmField
+    var holder: TodoItemsHolderImpl? = null
+	@RequiresApi(Build.VERSION_CODES.O)
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+		setContentView(R.layout.activity_main)
+		if (holder == null) {
+			holder = TodoItemsHolderImpl()
+		}
 
-public class MainActivity extends AppCompatActivity {
+		val adapter = ItemAdapter()
+		adapter.setItems(holder!!.currentItems);
 
-  public TodoItemsHolder holder = null;
-
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
-
-    if (holder == null) {
-      holder = new TodoItemsHolderImpl();
-    }
-
-    // TODO: implement the specs as defined below
-    //    (find all UI components, hook them up, connect everything you need)
-  }
+		val itemsRecycler: RecyclerView = findViewById(R.id.recyclerTodoItemsList)
+		itemsRecycler.adapter = adapter
+		itemsRecycler.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+		// TODO: implement the specs as defined below
+		//    (find all UI components, hook them up, connect everything you need)
+	}
 }
 
 /*
