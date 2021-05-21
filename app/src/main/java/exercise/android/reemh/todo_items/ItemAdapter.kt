@@ -1,11 +1,16 @@
 package exercise.android.reemh.todo_items
 
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
+import java.time.format.DateTimeFormatter
 
 class ItemAdapter: RecyclerView.Adapter<ItemHolder>() {
+
 	private val _items: MutableList<TodoItem> = ArrayList()
+	public var onItemCheckChange: ((TodoItem) -> Unit) ?= null
 
 	fun setItems(items: List<TodoItem>){
 		_items.clear()
@@ -19,9 +24,16 @@ class ItemAdapter: RecyclerView.Adapter<ItemHolder>() {
 		return ItemHolder(view)
 	}
 
+	@RequiresApi(Build.VERSION_CODES.O)
 	override fun onBindViewHolder(holder: ItemHolder, position: Int) {
 		val item = _items[position]
-		holder.itemCheck.text = item.description
+		holder.itemDescription.text = item.description
+		holder.itemDate.text = item.creationTime.format(DateTimeFormatter.ofPattern("d/M/y"))
+		holder.itemCheck.setOnClickListener{ view ->
+			val callback = onItemCheckChange ?: return@setOnClickListener
+			callback(item)
+		}
+		holder.itemCheck.isChecked = item.isDone
 	}
 
 	override fun getItemCount(): Int {

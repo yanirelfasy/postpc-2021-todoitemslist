@@ -2,14 +2,17 @@ package exercise.android.reemh.todo_items
 
 import android.os.Build
 import android.os.Bundle
+import android.widget.EditText
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
 	@JvmField
-    var holder: TodoItemsHolderImpl? = null
+    var holder: TodoItemsHolder? = null
 	@RequiresApi(Build.VERSION_CODES.O)
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -20,36 +23,45 @@ class MainActivity : AppCompatActivity() {
 
 		val adapter = ItemAdapter()
 		adapter.setItems(holder!!.currentItems);
-
+		adapter.onItemCheckChange = {todoItem: TodoItem ->
+			if(!todoItem.isDone){
+				holder!!.markItemDone(todoItem)
+			}
+			else{
+				holder!!.markItemInProgress(todoItem)
+			}
+			adapter.setItems(holder!!.currentItems)
+			adapter.notifyDataSetChanged()
+		}
 		val itemsRecycler: RecyclerView = findViewById(R.id.recyclerTodoItemsList)
+		val addTaskBtn : FloatingActionButton = findViewById(R.id.buttonCreateTodoItem);
+		val inputText : EditText = findViewById(R.id.editTextInsertTask);
+
 		itemsRecycler.adapter = adapter
 		itemsRecycler.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+		addTaskBtn.setOnClickListener {
+			if(inputText.text.isNotEmpty()){
+				holder!!.addNewInProgressItem(inputText.text.toString())
+				inputText.setText("");
+				adapter.setItems(holder!!.currentItems)
+				adapter.notifyDataSetChanged()
+			}
+		}
 		// TODO: implement the specs as defined below
 		//    (find all UI components, hook them up, connect everything you need)
 	}
+
 }
 
 /*
 
 SPECS:
 
-- the screen starts out empty (no items shown, edit-text input should be empty)
-- every time the user taps the "add TODO item" button:
-    * if the edit-text is empty (no input), nothing happens
-    * if there is input:
-        - a new TodoItem (checkbox not checked) will be created and added to the items list
-        - the new TodoItem will be shown as the first item in the Recycler view
-        - the edit-text input will be erased
 - the "TodoItems" list is shown in the screen
   * every operation that creates/edits/deletes a TodoItem should immediately be shown in the UI
-  * the order of the TodoItems in the UI is:
-    - all IN-PROGRESS items are shown first. items are sorted by creation time,
-      where the last-created item is the first item in the list
-    - all DONE items are shown afterwards, no particular sort is needed (but try to think about what's the best UX for the user)
-  * every item shows a checkbox and a description. you can decide to show other data as well (creation time, etc)
-  * DONE items should show the checkbox as checked, and the description with a strike-through text
-  * IN-PROGRESS items should show the checkbox as not checked, and the description text normal
-  * upon click on the checkbox, flip the TodoItem's state (if was DONE will be IN-PROGRESS, and vice versa)
+
+  * DONE items should show the description with a strike-through text
+  * IN-PROGRESS should the description text normal
   * add a functionality to remove a TodoItem. either by a button, long-click or any other UX as you want
 - when a screen rotation happens (user flips the screen):
   * the UI should still show the same list of TodoItems

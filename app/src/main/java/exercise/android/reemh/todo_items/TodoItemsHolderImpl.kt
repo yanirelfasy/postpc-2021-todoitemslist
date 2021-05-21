@@ -9,15 +9,17 @@ import java.time.LocalDateTime
 class TodoItemsHolderImpl : TodoItemsHolder {
 
 	private val _todoList = mutableListOf<TodoItem>();
+	private var _index = 0
 
 	override fun getCurrentItems(): List<TodoItem> {
-		return _todoList;
+		val sortedList = _todoList.sortedWith(compareBy<TodoItem> { it.isDone }.thenByDescending { it.creationTime })
+		return sortedList;
 	}
 
 	@RequiresApi(Build.VERSION_CODES.O)
 	override fun addNewInProgressItem(description: String) {
-		val itemID = if(_todoList.size == 0){ 0 } else{ _todoList.last().itemID + 1 }
-		_todoList += TodoItem(description, itemID)
+		_todoList += TodoItem(description, _index)
+		_index += 1
 	}
 
 	override fun markItemDone(item: TodoItem) {
