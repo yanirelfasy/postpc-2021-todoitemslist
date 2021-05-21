@@ -12,6 +12,7 @@ class ItemAdapter: RecyclerView.Adapter<ItemHolder>() {
 
 	private val _items: MutableList<TodoItem> = ArrayList()
 	public var onItemCheckChange: ((TodoItem) -> Unit) ?= null
+	public var onDeleteClick: ((TodoItem) -> Unit) ?= null
 
 	fun setItems(items: List<TodoItem>){
 		_items.clear()
@@ -32,6 +33,10 @@ class ItemAdapter: RecyclerView.Adapter<ItemHolder>() {
 		holder.itemDate.text = item.creationTime.format(DateTimeFormatter.ofPattern("d/M/y"))
 		holder.itemCheck.setOnClickListener{ view ->
 			val callback = onItemCheckChange ?: return@setOnClickListener
+			callback(item)
+		}
+		holder.deleteButton.setOnClickListener { v ->
+			val callback = onDeleteClick ?: return@setOnClickListener
 			callback(item)
 		}
 		holder.itemCheck.isChecked = item.isDone

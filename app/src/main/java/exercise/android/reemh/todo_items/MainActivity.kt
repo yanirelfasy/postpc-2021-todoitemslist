@@ -33,6 +33,11 @@ class MainActivity : AppCompatActivity() {
 			adapter.setItems(holder!!.currentItems)
 			adapter.notifyDataSetChanged()
 		}
+		adapter.onDeleteClick = {todoItem: TodoItem ->
+			holder!!.deleteItem(todoItem)
+			adapter.setItems(holder!!.currentItems)
+			adapter.notifyDataSetChanged()
+		}
 		val itemsRecycler: RecyclerView = findViewById(R.id.recyclerTodoItemsList)
 		val addTaskBtn : FloatingActionButton = findViewById(R.id.buttonCreateTodoItem);
 		val inputText : EditText = findViewById(R.id.editTextInsertTask);
@@ -57,23 +62,10 @@ class MainActivity : AppCompatActivity() {
 
 SPECS:
 
-- the "TodoItems" list is shown in the screen
-  * every operation that creates/edits/deletes a TodoItem should immediately be shown in the UI
-  * add a functionality to remove a TodoItem. either by a button, long-click or any other UX as you want
 - when a screen rotation happens (user flips the screen):
   * the UI should still show the same list of TodoItems
   * the edit-text should store the same user-input (don't erase input upon screen change)
 
 Remarks:
-- you should use the `holder` field of the activity
-- you will need to create a class extending from RecyclerView.Adapter and use it in this activity
-- notice that you have the "row_todo_item.xml" file and you can use it in the adapter
 - you should add tests to make sure your activity works as expected. take a look at file `MainActivityTest.java`
-
-
-
-(optional, for advanced students:
-- save the TodoItems list to file, so the list will still be in the same state even when app is killed and re-launched
-)
-
 */

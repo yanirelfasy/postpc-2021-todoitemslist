@@ -28,5 +28,7 @@ class TodoItemsHolderImpl : TodoItemsHolder {
 	override fun markItemInProgress(item: TodoItem) {
 		_todoList.find { it.itemID == item.itemID }?.changeStatus(false)
 	}
-	override fun deleteItem(item: TodoItem) {}
+	override fun deleteItem(item: TodoItem) {
+		_todoList.removeAll { it.itemID == item.itemID }
+	}
 }
