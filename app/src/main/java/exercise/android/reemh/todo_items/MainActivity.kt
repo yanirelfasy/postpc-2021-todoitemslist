@@ -52,8 +52,6 @@ class MainActivity : AppCompatActivity() {
 				adapter.notifyDataSetChanged()
 			}
 		}
-		// TODO: implement the specs as defined below
-		//    (find all UI components, hook them up, connect everything you need)
 	}
 
 	override fun onSaveInstanceState(outState: Bundle) {

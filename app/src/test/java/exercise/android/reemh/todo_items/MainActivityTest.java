@@ -1,12 +1,15 @@
 package exercise.android.reemh.todo_items;
 
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import junit.framework.TestCase;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -71,9 +74,19 @@ public class MainActivityTest extends TestCase {
 
   @Test
   public void when_userPutInputAndClicksButton_then_inputShouldBeErasedFromEditText() {
-    //    TODO: implement the test.
-    //     to set up the test, take a look at `when_userPutInputAndClicksButton_then_activityShouldCallAddItem()`
-    //     to verify, use methods such as "assertEquals(...)" or "assertTrue(...)"
+    // setup
+    String userInput = "Call my grandma today at 18:00";
+    activityController.create().visible(); // let the activity think it is being shown
+    MainActivity activityUnderTest = activityController.get();
+    EditText editText = activityUnderTest.findViewById(R.id.editTextInsertTask);
+    View fab = activityUnderTest.findViewById(R.id.buttonCreateTodoItem);
+
+    // test - mock user interactions
+    editText.setText(userInput);
+    fab.performClick();
+
+    // verify: verify that `mockHolder.addNewInProgressItem()` was called, with exactly same string
+    Assert.assertEquals("", editText.getText().toString());
   }
 
   @Test
@@ -101,8 +114,7 @@ public class MainActivityTest extends TestCase {
     ArrayList<TodoItem> itemsReturnedByHolder = new ArrayList<>();
     Mockito.when(mockHolder.getCurrentItems())
       .thenReturn(itemsReturnedByHolder);
-    TodoItem itemInProgress = new TodoItem("test", 0);
-    // TODO: customize `itemInProgress` to have type IN-PROGRESS and description "do homework"
+    TodoItem itemInProgress = new TodoItem("do homework", 0);
     itemsReturnedByHolder.add(itemInProgress);
 
     // test - let the activity think it is being shown
@@ -119,9 +131,10 @@ public class MainActivityTest extends TestCase {
 
     // 2. verify that the shown view has a checkbox being not-checked and has a TextView showing the correct description
     View viewInRecycler = recyclerView.findViewHolderForAdapterPosition(0).itemView;
-    // TODO: implement.
-    //  use `viewInRecycler.findViewById(...)` to find the checkbox and the description subviews,
-    //  and make sure the checkbox is not checked and the TextView shows the correct description
+    CheckBox checkBox = viewInRecycler.findViewById(R.id.item_checkbox);
+    TextView textView = viewInRecycler.findViewById(R.id.description);
+    Assert.assertFalse(checkBox.isChecked());
+    Assert.assertEquals(textView.getText().toString(), "do homework");
   }
 
 
@@ -133,8 +146,8 @@ public class MainActivityTest extends TestCase {
     ArrayList<TodoItem> itemsReturnedByHolder = new ArrayList<>();
     Mockito.when(mockHolder.getCurrentItems())
       .thenReturn(itemsReturnedByHolder);
-    TodoItem itemDone = new TodoItem("test", 0);
-    // TODO: customize `itemDone` to have type DONE and description "buy tomatoes"
+    TodoItem itemDone = new TodoItem("buy tomatoes", 0);
+    itemDone.changeStatus(true);
     itemsReturnedByHolder.add(itemDone);
 
     // test - let the activity think it is being shown
@@ -151,8 +164,10 @@ public class MainActivityTest extends TestCase {
 
     // 2. verify that the shown view has a checkbox being checked and has a TextView showing the correct description
     View viewInRecycler = recyclerView.findViewHolderForAdapterPosition(0).itemView;
-    // TODO: implement.
-    //  use `viewInRecycler.findViewById(...)` to find the checkbox and the description subviews,
-    //  and make sure the checkbox is checked and the TextView shows the correct description
+
+    CheckBox checkBox = viewInRecycler.findViewById(R.id.item_checkbox);
+    TextView textView = viewInRecycler.findViewById(R.id.description);
+    Assert.assertTrue(checkBox.isChecked());
+    Assert.assertEquals(textView.getText().toString(), "buy tomatoes");
   }
 }
