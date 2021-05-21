@@ -6,9 +6,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
+import java.io.Serializable
 import java.time.format.DateTimeFormatter
 
-class ItemAdapter: RecyclerView.Adapter<ItemHolder>() {
+class ItemAdapter: RecyclerView.Adapter<ItemHolder>(), Serializable {
 
 	private val _items: MutableList<TodoItem> = ArrayList()
 	public var onItemCheckChange: ((TodoItem) -> Unit) ?= null
