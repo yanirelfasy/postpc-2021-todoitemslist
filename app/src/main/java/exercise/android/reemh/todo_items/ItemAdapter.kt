@@ -1,5 +1,6 @@
 package exercise.android.reemh.todo_items
 
+import android.graphics.Paint
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -34,6 +35,12 @@ class ItemAdapter: RecyclerView.Adapter<ItemHolder>() {
 			callback(item)
 		}
 		holder.itemCheck.isChecked = item.isDone
+		if(item.isDone){
+			holder.itemDescription.setPaintFlags(holder.itemDescription.getPaintFlags() or Paint.STRIKE_THRU_TEXT_FLAG)
+		}
+		else{
+			holder.itemDescription.setPaintFlags(holder.itemDescription.getPaintFlags() and Paint.STRIKE_THRU_TEXT_FLAG.inv())
+		}
 	}
 
 	override fun getItemCount(): Int {

@@ -59,9 +59,6 @@ SPECS:
 
 - the "TodoItems" list is shown in the screen
   * every operation that creates/edits/deletes a TodoItem should immediately be shown in the UI
-
-  * DONE items should show the description with a strike-through text
-  * IN-PROGRESS should the description text normal
   * add a functionality to remove a TodoItem. either by a button, long-click or any other UX as you want
 - when a screen rotation happens (user flips the screen):
   * the UI should still show the same list of TodoItems
