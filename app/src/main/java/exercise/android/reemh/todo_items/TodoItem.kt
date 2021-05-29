@@ -7,13 +7,31 @@ import java.time.LocalDateTime
 import java.util.*
 
 
-data class TodoItem(val description: String) : Serializable {
-	val itemID: String = UUID.randomUUID().toString();
-	var isDone = false
-	@RequiresApi(Build.VERSION_CODES.O)
-	val creationTime =  LocalDateTime.now();
+data class TodoItem(var description: String, val itemID: String, var isDone: Boolean, val creationTime: LocalDateTime) : Serializable {
 
 	fun changeStatus(newStatus: Boolean):Unit{
-		isDone = newStatus
+		this.isDone = newStatus
 	}
+
+	fun serialize() : String{
+		return "$itemID#$description#$isDone#$creationTime"
+	}
+
+	companion object{
+		@RequiresApi(Build.VERSION_CODES.O)
+		fun stringToItem(itemString : String) : TodoItem? {
+			try{
+				val data: List<String> = itemString.split("#")
+				val id = data[0]
+				val description = data[1]
+				val isDone = data[2].toBoolean()
+				val creationTime = data[3]
+				return TodoItem(description, id, isDone, LocalDateTime.now()) // TODO: See how to convert time;
+			}
+			catch( e: Exception){
+				return null
+			}
+		}
+	}
+
 }
