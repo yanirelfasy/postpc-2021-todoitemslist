@@ -26,7 +26,7 @@ data class TodoItem(var description: String, val itemID: String, var isDone: Boo
 				val description = data[1]
 				val isDone = data[2].toBoolean()
 				val creationTime = data[3]
-				return TodoItem(description, id, isDone, LocalDateTime.now()) // TODO: See how to convert time;
+				return TodoItem(description, id, isDone, LocalDateTime.parse(creationTime))
 			}
 			catch( e: Exception){
 				return null
