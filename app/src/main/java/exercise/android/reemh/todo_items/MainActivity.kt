@@ -11,15 +11,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
-	@JvmField
-    var holder: TodoItemsHolder? = null
+
+	var holder: TodoItemsHolderImpl? = null;
+
 	@RequiresApi(Build.VERSION_CODES.O)
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		setContentView(R.layout.activity_main)
-		if (holder == null) {
-			holder = TodoItemsHolderImpl()
+		if(holder == null){
+			holder = TodoApplication.getInstance().database
 		}
+
+		setContentView(R.layout.activity_main)
 
 		val adapter = ItemAdapter()
 		adapter.setItems(holder!!.currentItems);
@@ -59,9 +61,10 @@ class MainActivity : AppCompatActivity() {
 		outState.putSerializable("holder", holder);
 	}
 
+	@RequiresApi(Build.VERSION_CODES.O)
 	override fun onRestoreInstanceState(savedInstanceState: Bundle) {
 		super.onRestoreInstanceState(savedInstanceState)
-		holder = savedInstanceState.getSerializable("holder") as TodoItemsHolder
+		holder = savedInstanceState.getSerializable("holder") as TodoItemsHolderImpl
 
 		val adapter = ItemAdapter()
 		adapter.setItems(holder!!.currentItems);

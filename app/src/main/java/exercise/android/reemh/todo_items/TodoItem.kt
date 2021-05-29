@@ -7,7 +7,8 @@ import java.time.LocalDateTime
 import java.util.*
 
 
-data class TodoItem(val description: String, val itemID : Int) : Serializable {
+data class TodoItem(val description: String) : Serializable {
+	val itemID: String = UUID.randomUUID().toString();
 	var isDone = false
 	@RequiresApi(Build.VERSION_CODES.O)
 	val creationTime =  LocalDateTime.now();
