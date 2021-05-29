@@ -53,6 +53,7 @@ class TodoItemsHolderImpl( val context : Context) : TodoItemsHolder, Serializabl
 	override fun markItemDone(item: TodoItem) {
 		val foundItem = _todoList.find { it.itemID == item.itemID }
 		foundItem?.changeStatus(true)
+		foundItem?.changeDateModified(LocalDateTime.now())
 		itemsLiveData.value = ArrayList(_todoList)
 		val editor : SharedPreferences.Editor = sp.edit();
 		editor.putString(foundItem?.itemID, foundItem?.serialize());
@@ -61,6 +62,7 @@ class TodoItemsHolderImpl( val context : Context) : TodoItemsHolder, Serializabl
 	override fun markItemInProgress(item: TodoItem) {
 		val foundItem = _todoList.find { it.itemID == item.itemID }
 		foundItem?.changeStatus(false)
+		foundItem?.changeDateModified(LocalDateTime.now())
 		itemsLiveData.value = ArrayList(_todoList)
 		val editor : SharedPreferences.Editor = sp.edit();
 		editor.putString(foundItem?.itemID, foundItem?.serialize());
@@ -84,7 +86,14 @@ class TodoItemsHolderImpl( val context : Context) : TodoItemsHolder, Serializabl
 		return null
 	}
 
-	fun editItem(itemID : String){
-		// TODO: Add editing func
+	fun editItemDescription(itemID : String, description : String){
+		val foundItem = _todoList.find { it.itemID == itemID }
+		foundItem?.description = description
+		foundItem?.changeDateModified(LocalDateTime.now())
+		itemsLiveData.value = ArrayList(_todoList)
+		val editor : SharedPreferences.Editor = sp.edit();
+		editor.putString(foundItem?.itemID, foundItem?.serialize());
+		editor.apply();
 	}
+
 }

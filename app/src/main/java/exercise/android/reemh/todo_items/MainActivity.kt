@@ -1,5 +1,6 @@
 package exercise.android.reemh.todo_items
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.widget.EditText
@@ -37,6 +38,11 @@ class MainActivity : AppCompatActivity() {
 		adapter.onDeleteClick = {todoItem: TodoItem ->
 			holder!!.deleteItem(todoItem)
 		}
+		adapter.onItemRowClick = {todoItem: TodoItem ->
+			val intent: Intent = Intent(this, EditActivity::class.java)
+			intent.putExtra("item", todoItem.itemID)
+			startActivity(intent)
+		}
 		val itemsRecycler: RecyclerView = findViewById(R.id.recyclerTodoItemsList)
 		val addTaskBtn : FloatingActionButton = findViewById(R.id.buttonCreateTodoItem);
 		val inputText : EditText = findViewById(R.id.editTextInsertTask);
@@ -55,43 +61,6 @@ class MainActivity : AppCompatActivity() {
 			adapter.notifyDataSetChanged()
 		})
 	}
-
-//	override fun onSaveInstanceState(outState: Bundle) {
-//		super.onSaveInstanceState(outState)
-//		outState.putSerializable("holder", holder);
-//	}
-//
-//	@RequiresApi(Build.VERSION_CODES.O)
-//	override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-//		super.onRestoreInstanceState(savedInstanceState)
-//		holder = savedInstanceState.getSerializable("holder") as TodoItemsHolderImpl
-//
-//		val adapter = ItemAdapter()
-//		adapter.setItems(holder!!.currentItems);
-//		adapter.onItemCheckChange = {todoItem: TodoItem ->
-//			if(!todoItem.isDone){
-//				holder!!.markItemDone(todoItem)
-//			}
-//			else{
-//				holder!!.markItemInProgress(todoItem)
-//			}
-//		}
-//		adapter.onDeleteClick = {todoItem: TodoItem ->
-//			holder!!.deleteItem(todoItem)
-//		}
-//		val itemsRecycler: RecyclerView = findViewById(R.id.recyclerTodoItemsList)
-//		val addTaskBtn : FloatingActionButton = findViewById(R.id.buttonCreateTodoItem);
-//		val inputText : EditText = findViewById(R.id.editTextInsertTask);
-//
-//		itemsRecycler.adapter = adapter
-//		itemsRecycler.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-//		addTaskBtn.setOnClickListener {
-//			if(inputText.text.isNotEmpty()){
-//				holder!!.addNewInProgressItem(inputText.text.toString())
-//				inputText.setText("");
-//			}
-//		}
-//	}
 
 }
 

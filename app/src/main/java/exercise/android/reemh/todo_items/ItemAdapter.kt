@@ -14,6 +14,7 @@ class ItemAdapter: RecyclerView.Adapter<ItemHolder>(), Serializable {
 	private val _items: MutableList<TodoItem> = ArrayList()
 	public var onItemCheckChange: ((TodoItem) -> Unit) ?= null
 	public var onDeleteClick: ((TodoItem) -> Unit) ?= null
+	public var onItemRowClick: ((TodoItem) -> Unit) ?= null
 
 	fun setItems(items: List<TodoItem>){
 		_items.clear()
@@ -38,6 +39,10 @@ class ItemAdapter: RecyclerView.Adapter<ItemHolder>(), Serializable {
 		}
 		holder.deleteButton.setOnClickListener { v ->
 			val callback = onDeleteClick ?: return@setOnClickListener
+			callback(item)
+		}
+		holder.row.setOnClickListener { v ->
+			val callback = onItemRowClick ?: return@setOnClickListener
 			callback(item)
 		}
 		holder.itemCheck.isChecked = item.isDone

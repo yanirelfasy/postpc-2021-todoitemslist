@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="Edit Item"
+        android:textSize="20dp"
+        android:textAlignment="center"
+        android:layout_marginTop="20dp"
+        />
+
+    <TextView
+        android:id="@+id/item_id_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Item ID:"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="30dp"
+        android:textSize="20dp"
+    />
+
+    <TextView
+        android:id="@+id/item_id"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        app:layout_constraintStart_toEndOf="@+id/item_id_label"
+        android:text="ITEM ID CONTAINER"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        android:layout_marginTop="30dp"
+        android:textSize="15dp"
+        android:paddingStart="5dp"
+        android:gravity="center"
+        />
+
+    <TextView
+        android:id="@+id/creation_date_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Creation Date:"
+        app:layout_constraintTop_toBottomOf="@id/item_id_label"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="30dp"
+        android:textSize="20dp"
+        />
+
+    <TextView
+        android:id="@+id/creation_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@+id/creation_date_label"
+        android:text="CREATION CONTAINER"
+        app:layout_constraintTop_toBottomOf="@id/item_id"
+        android:layout_marginTop="30dp"
+        android:textSize="20dp"
+        android:paddingStart="10dp"
+        />
+
+    <TextView
+        android:id="@+id/modify_date_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Last Modified:"
+        app:layout_constraintTop_toBottomOf="@id/creation_date_label"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="30dp"
+        android:textSize="20dp"
+        />
+
+    <TextView
+        android:id="@+id/modify_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@+id/modify_date_label"
+        android:text="CREATION CONTAINER"
+        app:layout_constraintTop_toBottomOf="@id/creation_date"
+        android:layout_marginTop="30dp"
+        android:textSize="20dp"
+        android:paddingStart="10dp"
+        />
+
+    <TextView
+        android:id="@+id/status_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Status:"
+        app:layout_constraintTop_toBottomOf="@id/modify_date_label"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="30dp"
+        android:textSize="20dp"
+        />
+
+    <TextView
+        android:id="@+id/status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@+id/status_label"
+        android:text="In Progress"
+        app:layout_constraintTop_toBottomOf="@id/modify_date"
+        android:layout_marginTop="30dp"
+        android:textSize="20dp"
+        android:paddingStart="10dp"
+        />
+
+    <Button
+        android:id="@+id/change_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/modify_date"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="30dp"
+        android:text="Change"
+        />
+
+
+    <TextView
+        android:id="@+id/description_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Description"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="30dp"
+        app:layout_constraintTop_toBottomOf="@+id/status"
+        android:textSize="30dp"
+        />
+
+    <EditText
+        android:id="@+id/description_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/description_label"
+        android:paddingStart="20dp"
+        />
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

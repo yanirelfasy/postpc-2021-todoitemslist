@@ -11,4 +11,5 @@ class ItemHolder (view: View) : RecyclerView.ViewHolder(view) {
 	val itemDescription : TextView = view.findViewById(R.id.description)
 	val itemDate : TextView = view.findViewById(R.id.date)
 	val deleteButton : Button = view.findViewById(R.id.delete_item)
+	val row: View = view.findViewById(R.id.item_container)
 }

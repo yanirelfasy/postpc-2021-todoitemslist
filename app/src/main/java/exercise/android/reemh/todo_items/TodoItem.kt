@@ -7,14 +7,18 @@ import java.time.LocalDateTime
 import java.util.*
 
 
-data class TodoItem(var description: String, val itemID: String, var isDone: Boolean, val creationTime: LocalDateTime) : Serializable {
+data class TodoItem(var description: String, val itemID: String, var isDone: Boolean, val creationTime: LocalDateTime, var dateModified : LocalDateTime = creationTime) : Serializable {
 
 	fun changeStatus(newStatus: Boolean):Unit{
 		this.isDone = newStatus
 	}
 
+	fun changeDateModified(newDate: LocalDateTime){
+		this.dateModified = newDate
+	}
+
 	fun serialize() : String{
-		return "$itemID#$description#$isDone#$creationTime"
+		return "$itemID#$description#$isDone#$creationTime#$dateModified"
 	}
 
 	companion object{
@@ -26,7 +30,8 @@ data class TodoItem(var description: String, val itemID: String, var isDone: Boo
 				val description = data[1]
 				val isDone = data[2].toBoolean()
 				val creationTime = data[3]
-				return TodoItem(description, id, isDone, LocalDateTime.parse(creationTime))
+				val dateModified = data[4]
+				return TodoItem(description, id, isDone, LocalDateTime.parse(creationTime), LocalDateTime.parse(dateModified))
 			}
 			catch( e: Exception){
 				return null
